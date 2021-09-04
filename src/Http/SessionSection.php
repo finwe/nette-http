@@ -17,7 +17,6 @@ use Nette;
  */
 class SessionSection implements \IteratorAggregate, \ArrayAccess
 {
-	public bool $warnOnUndefined = false;
 	private Session $session;
 	private string $name;
 
@@ -114,10 +113,6 @@ class SessionSection implements \IteratorAggregate, \ArrayAccess
 		trigger_error("Reading from \$session->$name is deprecated, use \$session->get('$name') instead", E_USER_DEPRECATED);
 		$this->session->autoStart(true);
 		$data = &$this->getData();
-		if ($this->warnOnUndefined && !array_key_exists($name, $data ?? [])) {
-			trigger_error("The variable '$name' does not exist in session section");
-		}
-
 		return $data[$name];
 	}
 
